@@ -1,0 +1,60 @@
+# ─────────────────────────────
+# EG WOHNEN – Kaminbank Zwangstellung Auto-Reset 30 min
+# ─────────────────────────────
+- id: heizung_eg_woh_kaminbank_zwang_reset_30m
+  alias: "EG Wohnen Kaminbank: Zwang nach 30 min zurücksetzen"
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: switch.eg_woh_heiz_kaminbank_zwang
+      to: "on"
+    - platform: state
+      entity_id: switch.eg_woh_heiz_kaminbank_zwang
+      to: "off"
+    - platform: homeassistant
+      event: start
+  variables:
+    sw: switch.eg_woh_heiz_kaminbank_zwang
+    started: input_datetime.eg_woh_heiz_kaminbank_zwang_started
+    runtime_sec: 1800
+  action:
+    - choose:
+        - conditions: "{{ trigger.platform == 'state' and trigger.to_state.state == 'on' }}"
+          sequence:
+            - service: input_datetime.set_datetime
+              target: { entity_id: "{{ started }}" }
+              data: { datetime: "{{ now().isoformat() }}" }
+            - delay: { seconds: "{{ runtime_sec }}" }
+            - condition: state
+              entity_id: "{{ sw }}"
+              state: "on"
+            - service: switch.turn_off
+              target: { entity_id: "{{ sw }}" }
+
+        - conditions: "{{ trigger.platform == 'state' and trigger.to_state.state == 'off' }}"
+          sequence:
+            - service: input_datetime.set_datetime
+              target: { entity_id: "{{ started }}" }
+              data: { datetime: "1970-01-01T00:00:00" }
+
+        - conditions: "{{ trigger.platform == 'homeassistant' }}"
+          sequence:
+            - condition: state
+              entity_id: "{{ sw }}"
+              state: "on"
+            - variables:
+                started_ts: "{{ as_timestamp(states(started), 0) }}"
+                elapsed: "{{ as_timestamp(now()) - started_ts }}"
+            - choose:
+                - conditions: "{{ started_ts > 0 and elapsed >= runtime_sec }}"
+                  sequence:
+                    - service: switch.turn_off
+                      target: { entity_id: "{{ sw }}" }
+                - conditions: "{{ started_ts > 0 and elapsed < runtime_sec }}"
+                  sequence:
+                    - delay: { seconds: "{{ (runtime_sec - elapsed) | int }}" }
+                    - condition: state
+                      entity_id: "{{ sw }}"
+                      state: "on"
+                    - service: switch.turn_off
+                      target: { entity_id: "{{ sw }}" }

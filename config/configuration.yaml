@@ -1,4 +1,18 @@
 
+# ------------------------------------------------------
+# | ddddd   eeeee   ccccc   eeeee   bbbbb   u   u |
+# | d   d   e       c       e       b    b  u   u |
+# | d   d   eeee    c       eeee    bbbbb   u   u |
+# | d   d   e       c       e       b    b  u   u |
+# | ddddd   eeeee   ccccc   eeeee   bbbbb   uuuuu |
+# ------------------------------------------------------
+# Schittenhelm – Homeassistant Configuration
+# File: configuration.yaml
+# Created by: DeCeBu (Data Excellence, Connectivity and Business)
+# More info: https://github.com/DeCeBu/ha_efhs
+# License: CC-BY-NC-SA-4.0
+# ------------------------------------------------------
+
 # Loads default set of integrations. Do not remove.
 default_config:
 
@@ -6,6 +20,60 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
-automation: !include automations.yaml
-script: !include scripts.yaml
+automation manual: !include_dir_merge_list includes/automations/
+automation ui: !include automations.yaml
 scene: !include scenes.yaml
+knx: !include knx.yaml
+# input_boolean: !include_dir_merge_named includes/input/input_boolean/
+# input_select:  !include_dir_merge_named includes/input/input_select/
+# input_number:  !include_dir_merge_named includes/input/input_number/
+# input_text:    !include_dir_merge_named includes/input/input_text/
+input_datetime: !include_dir_merge_named includes/input/input_datetime/
+# notify: !include_dir_merge_list includes/notify/
+# mqtt: !include_dir_merge_list includes/mqtt/
+template: !include_dir_merge_list includes/templates/
+# timer: !include includes/timer/timer.yaml
+# sensor: !include_dir_merge_list includes/sensors/
+# script: !include_dir_merge_named includes/scripts/
+# group: !include includes/groups.yaml
+
+# lovelace:
+#   mode: yaml
+#   resources:
+#     - url: /local/lovelace-mushroom/mushroom.js
+#       type: module
+#     - url: /hacsfiles/Bubble-Card/bubble-card.js
+#       type: module
+#     - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
+#       type: module
+#     - url: /hacsfiles/search-card/search-card.js?v=0
+#       type: module
+#     - url: /hacsfiles/lovelace-card-tools/card-tools.js
+#       type: module
+#     - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
+#       type: module
+#     - url: /local/alarmo-card/alarmo-card.js?v=0
+#       type: module
+#   dashboards:
+#     dash-rollo:
+#       mode: yaml
+#       title: Rollladensteuerung
+#       icon: mdi:window-shutter
+#       show_in_sidebar: true
+#       filename: dashboards/dashboard_rollo_debug.yaml
+#     dash-debug:
+#       mode: yaml
+#       title: Alarmanlage
+#       icon: mdi:shield-lock-outline
+#       show_in_sidebar: true
+#       filename: dashboards/dashboard_debug.yaml
+#     dash-heat:
+#       mode: yaml
+#       title: Heizung
+#       icon: mdi:radiator
+#       show_in_sidebar: true
+#       filename: dashboards/dashboard_heating.yaml
+
+# homeassistant:
+#   allowlist_external_dirs:
+#     - /config/www/bubble

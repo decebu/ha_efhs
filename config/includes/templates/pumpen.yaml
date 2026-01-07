@@ -1,0 +1,21 @@
+# ─────────────────────────────
+# Pumpen – Aggregationen (SmarthomeNG eval: or)
+# Hinweis: Auswahl erfolgt über Namenssuffixe _heizen_state und _stellwert_state.
+# ─────────────────────────────
+
+- binary_sensor:
+    - name: eg_zen_heizen_any_state
+      state: >-
+        {{
+          (states.binary_sensor
+            | selectattr('entity_id','search','_heizen_state$')
+            | selectattr('state','eq','on')
+            | list
+            | count) > 0
+          or
+          (states.binary_sensor
+            | selectattr('entity_id','search','_stellwert_state$')
+            | selectattr('state','eq','on')
+            | list
+            | count) > 0
+        }}
