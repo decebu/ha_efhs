@@ -1,0 +1,354 @@
+# ─────────────────────────────
+# AUSSEN Zentral
+# ─────────────────────────────
+- name: aussen_zen_licht_alle_aus
+  address: "1/0/4"
+
+# ─────────────────────────────
+# DG Buehne
+# ─────────────────────────────
+- name: dg_dst_jalousie_o_sperre
+  address: "5/4/6"
+  state_address: "5/4/6"
+
+- name: dg_dst_jalousie_o_automatik
+  address: "5/4/8"
+  state_address: "5/4/8"
+
+- name: dg_dst_jalousie_w_sperre
+  address: "5/4/16"
+  state_address: "5/4/16"
+
+- name: dg_dst_jalousie_w_automatik
+  address: "5/4/18"
+  state_address: "5/4/18"
+
+# ─────────────────────────────
+# DG Zentral
+# ─────────────────────────────
+- name: dg_zen_licht_alle_aus
+  address: "1/0/3"
+
+# ─────────────────────────────
+# EG Bad
+# ─────────────────────────────
+- name: eg_bad_jalousie_n_sperre
+  address: "5/2/6"
+  state_address: "5/2/6"
+
+- name: eg_bad_jalousie_n_automatik
+  address: "5/2/8"
+  state_address: "5/2/8"
+
+- name: eg_bad_jalousie_w_sperre
+  address: "5/2/16"
+  state_address: "5/2/16"
+
+- name: eg_bad_jalousie_w_automatik
+  address: "5/2/18"
+  state_address: "5/2/18"
+
+# ─────────────────────────────
+# EG Kueche
+# ─────────────────────────────
+- name: eg_kue_jalousie_n_sperre
+  address: "5/2/46"
+  state_address: "5/2/46"
+
+- name: eg_kue_jalousie_n_automatik
+  address: "5/2/48"
+  state_address: "5/2/48"
+
+- name: eg_kue_jalousie_o_sperre
+  address: "5/2/56"
+  state_address: "5/2/56"
+
+- name: eg_kue_jalousie_o_automatik
+  address: "5/2/58"
+  state_address: "5/2/58"
+
+# ─────────────────────────────
+# EG Schlafzimmer
+# ─────────────────────────────
+- name: eg_sch_jalousie_t_sperre
+  address: "5/2/26"
+  state_address: "5/2/26"
+
+- name: eg_sch_jalousie_t_automatik
+  address: "5/2/28"
+  state_address: "5/2/28"
+
+- name: eg_sch_jalousie_f_sperre
+  address: "5/2/36"
+  state_address: "5/2/36"
+
+- name: eg_sch_jalousie_f_automatik
+  address: "5/2/38"
+  state_address: "5/2/38"
+
+# ─────────────────────────────
+# EG WC
+# ─────────────────────────────
+- name: eg_wc_jalousie_n_sperre
+  address: "5/2/126"
+  state_address: "5/2/126"
+
+- name: eg_wc_jalousie_n_automatik
+  address: "5/2/128"
+  state_address: "5/2/128"
+
+# ─────────────────────────────
+# EG Wohnen
+# ─────────────────────────────
+- name: eg_woh_jalousie_o_sperre
+  address: "5/2/66"
+  state_address: "5/2/66"
+
+- name: eg_woh_jalousie_o_automatik
+  address: "5/2/68"
+  state_address: "5/2/68"
+
+- name: eg_woh_jalousie_e_sperre
+  address: "5/2/76"
+  state_address: "5/2/76"
+
+- name: eg_woh_jalousie_e_automatik
+  address: "5/2/78"
+  state_address: "5/2/78"
+
+- name: eg_woh_jalousie_t_sperre
+  address: "5/2/86"
+  state_address: "5/2/86"
+
+- name: eg_woh_jalousie_t_automatik
+  address: "5/2/88"
+  state_address: "5/2/88"
+
+- name: eg_woh_jalousie_w_sperre
+  address: "5/2/106"
+  state_address: "5/2/106"
+
+- name: eg_woh_jalousie_w_automatik
+  address: "5/2/108"
+  state_address: "5/2/108"
+
+# ─────────────────────────────
+# EG Zentral
+# ─────────────────────────────
+- name: eg_zen_flag_anwesenheit
+  address: "0/0/1"
+  state_address: "0/0/1"
+
+- name: eg_zen_licht_haus_aus
+  address: "1/0/5"
+
+- name: eg_zen_jalousie_haus_automatik
+  address: "5/0/7"
+
+- name: eg_zen_jalousie_haus_sperre
+  address: "5/0/4"
+
+- name: eg_zen_licht_alle_aus
+  address: "1/0/1"
+
+- name: eg_zen_status_winter_sommer
+  address: "0/2/6"
+
+- name: eg_zen_jalousie_automatik
+  address: "5/0/27"
+
+- name: eg_zen_jalousie_sperre
+  address: "5/0/24"
+
+# ─────────────────────────────
+# KELLER Zentral
+# ─────────────────────────────
+- name: keller_zen_licht_alle_aus
+  address: "1/0/6"
+
+# ─────────────────────────────
+# OG Bad
+# ─────────────────────────────
+- name: og_bad_jalousie_n_sperre
+  address: "5/3/6"
+  state_address: "5/3/6"
+
+- name: og_bad_jalousie_n_automatik
+  address: "5/3/8"
+  state_address: "5/3/8"
+
+- name: og_bad_jalousie_w_sperre
+  address: "5/3/16"
+  state_address: "5/3/16"
+
+- name: og_bad_jalousie_w_automatik
+  address: "5/3/18"
+  state_address: "5/3/18"
+
+# ─────────────────────────────
+# OG Diele
+# ─────────────────────────────
+- name: og_die_jalousie_n_sperre
+  address: "5/3/46"
+  state_address: "5/3/46"
+
+- name: og_die_jalousie_n_automatik
+  address: "5/3/48"
+  state_address: "5/3/48"
+
+- name: og_die_jalousie_s_sperre
+  address: "5/3/56"
+  state_address: "5/3/56"
+
+- name: og_die_jalousie_s_automatik
+  address: "5/3/58"
+  state_address: "5/3/58"
+
+# ─────────────────────────────
+# OG Gaeste
+# ─────────────────────────────
+- name: og_gae_jalousie_n_sperre
+  address: "5/3/66"
+  state_address: "5/3/66"
+
+- name: og_gae_jalousie_n_automatik
+  address: "5/3/68"
+  state_address: "5/3/68"
+
+- name: og_gae_jalousie_o_sperre
+  address: "5/3/76"
+  state_address: "5/3/76"
+
+- name: og_gae_jalousie_o_automatik
+  address: "5/3/78"
+  state_address: "5/3/78"
+
+# ─────────────────────────────
+# OG Schlafen
+# ─────────────────────────────
+- name: og_sch_jalousie_o_sperre
+  address: "5/3/86"
+  state_address: "5/3/86"
+
+- name: og_sch_jalousie_o_automatik
+  address: "5/3/88"
+  state_address: "5/3/88"
+
+- name: og_sch_jalousie_s_sperre
+  address: "5/3/96"
+  state_address: "5/3/96"
+
+- name: og_sch_jalousie_s_automatik
+  address: "5/3/98"
+  state_address: "5/3/98"
+
+# ─────────────────────────────
+# OG Wohnen
+# ─────────────────────────────
+- name: og_woh_jalousie_s_sperre
+  address: "5/3/26"
+  state_address: "5/3/26"
+
+- name: og_woh_jalousie_s_automatik
+  address: "5/3/28"
+  state_address: "5/3/28"
+
+- name: og_woh_jalousie_w_sperre
+  address: "5/3/36"
+  state_address: "5/3/36"
+
+- name: og_woh_jalousie_w_automatik
+  address: "5/3/38"
+  state_address: "5/3/38"
+
+# ─────────────────────────────
+# OG Zentral
+# ─────────────────────────────
+- name: og_zen_licht_alle_aus
+  address: "1/0/2"
+
+- name: og_zen_jalousie_automatik
+  address: "5/0/37"
+
+- name: og_zen_jalousie_sperre
+  address: "5/0/34"
+
+# ─────────────────────────────
+# UG Bad
+# ─────────────────────────────
+- name: ug_bad_jalousie_w_sperre
+  address: "5/1/6"
+  state_address: "5/1/6"
+
+- name: ug_bad_jalousie_w_automatik
+  address: "5/1/8"
+  state_address: "5/1/8"
+
+# ─────────────────────────────
+# UG Flur
+# ─────────────────────────────
+- name: ug_flu_jalousie_w_sperre
+  address: "5/1/16"
+  state_address: "5/1/16"
+
+- name: ug_flu_jalousie_w_automatik
+  address: "5/1/18"
+  state_address: "5/1/18"
+
+# ─────────────────────────────
+# UG Kueche
+# ─────────────────────────────
+- name: ug_kue_jalousie_o_sperre
+  address: "5/1/36"
+  state_address: "5/1/36"
+
+- name: ug_kue_jalousie_o_automatik
+  address: "5/1/38"
+  state_address: "5/1/38"
+
+# ─────────────────────────────
+# UG Schlafen
+# ─────────────────────────────
+- name: ug_sch_jalousie_s_sperre
+  address: "5/1/26"
+  state_address: "5/1/26"
+
+- name: ug_sch_jalousie_s_automatik
+  address: "5/1/28"
+  state_address: "5/1/28"
+
+# ─────────────────────────────
+# UG Wohnen
+# ─────────────────────────────
+- name: ug_woh_jalousie_s_sperre
+  address: "5/1/46"
+  state_address: "5/1/46"
+
+- name: ug_woh_jalousie_s_automatik
+  address: "5/1/48"
+  state_address: "5/1/48"
+
+- name: ug_woh_jalousie_s_sperre
+  address: "5/1/56"
+  state_address: "5/1/56"
+
+- name: ug_woh_jalousie_s_automatik
+  address: "5/1/58"
+  state_address: "5/1/58"
+
+# ─────────────────────────────
+# UG Zentral
+# ─────────────────────────────
+- name: ug_zen_licht_alle_aus
+  address: "1/0/0"
+
+- name: ug_zen_heiz_notheizung
+  address: "4/0/70"
+  state_address: "4/0/71"
+
+- name: ug_zen_jalousie_automatik
+  address: "5/0/17"
+
+- name: ug_zen_jalousie_sperre
+  address: "5/0/14"
+

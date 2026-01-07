@@ -1,0 +1,21 @@
+# ─────────────────────────────
+# EG Essen
+# ─────────────────────────────
+- name: eg_ess_decke
+  address: "1/2/25"
+  state_address: "1/2/26"
+
+# ─────────────────────────────
+# EG Kueche
+# ─────────────────────────────
+- name: eg_kue_pendel_tisch
+  address: "1/2/30"
+  state_address: "1/2/31"
+
+# ─────────────────────────────
+# EG Wohnen
+# ─────────────────────────────
+- name: eg_woh_ambiente_weihnachtsstern
+  address: "1/2/20"
+  state_address: "1/2/21"
+
