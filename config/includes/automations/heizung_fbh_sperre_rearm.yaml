@@ -1,179 +1,233 @@
 # ─────────────────────────────
 # FBH Sperre Auto-Rearm (nur 3 Bäder: UG/EG/OG)
 # Sperre: 1 = gesperrt, 0 = freigegeben
-# Timer: bei erneuter Freigabe neu starten (mode: restart)
+# Timer je Bad über input_number einstellbar (Default 60 min)
 # ─────────────────────────────
 
-- id: heizung_ug_bad_fbh_sperre_rearm_60m
-  alias: "UG Bad FBH: Sperre nach 60 min wieder setzen"
+- id: heizung_ug_bad_fbh_sperre_rearm
+  alias: "UG Bad FBH: Sperre nach Timer wieder setzen"
   mode: restart
   trigger:
     - platform: state
-      entity_id: switch.ug_bad_sperre_fbh_cmd
-      to: "off"          # freigegeben
-    - platform: state
-      entity_id: switch.ug_bad_sperre_fbh_cmd
-      to: "on"           # gesperrt
-    - platform: homeassistant
-      event: start
-  variables:
-    lock: switch.ug_bad_sperre_fbh_cmd
-    started: input_datetime.ug_bad_fbh_sperre_started
-    runtime_sec: 3600
-  action:
-    - choose:
-        - conditions: "{{ trigger.platform == 'state' and trigger.to_state.state == 'off' }}"
-          sequence:
-            - service: input_datetime.set_datetime
-              target: { entity_id: "{{ started }}" }
-              data: { datetime: "{{ now().isoformat() }}" }
-            - delay: { seconds: "{{ runtime_sec }}" }
-            - condition: state
-              entity_id: "{{ lock }}"
-              state: "off"
-            - service: switch.turn_on
-              target: { entity_id: "{{ lock }}" }
-
-        - conditions: "{{ trigger.platform == 'state' and trigger.to_state.state == 'on' }}"
-          sequence:
-            - service: input_datetime.set_datetime
-              target: { entity_id: "{{ started }}" }
-              data: { datetime: "1970-01-01T00:00:00" }
-
-        - conditions: "{{ trigger.platform == 'homeassistant' }}"
-          sequence:
-            - condition: state
-              entity_id: "{{ lock }}"
-              state: "off"
-            - variables:
-                started_ts: "{{ as_timestamp(states(started), 0) }}"
-                elapsed: "{{ as_timestamp(now()) - started_ts }}"
-            - choose:
-                - conditions: "{{ started_ts > 0 and elapsed >= runtime_sec }}"
-                  sequence:
-                    - service: switch.turn_on
-                      target: { entity_id: "{{ lock }}" }
-                - conditions: "{{ started_ts > 0 and elapsed < runtime_sec }}"
-                  sequence:
-                    - delay: { seconds: "{{ (runtime_sec - elapsed) | int }}" }
-                    - condition: state
-                      entity_id: "{{ lock }}"
-                      state: "off"
-                    - service: switch.turn_on
-                      target: { entity_id: "{{ lock }}" }
-
-- id: heizung_eg_bad_fbh_sperre_rearm_60m
-  alias: "EG Bad FBH: Sperre nach 60 min wieder setzen"
-  mode: restart
-  trigger:
-    - platform: state
-      entity_id: switch.eg_bad_sperre_fbh_cmd
+      entity_id: switch.ug_bad_sperre_fbh
       to: "off"
     - platform: state
-      entity_id: switch.eg_bad_sperre_fbh_cmd
+      entity_id: switch.ug_bad_sperre_fbh
       to: "on"
     - platform: homeassistant
       event: start
   variables:
-    lock: switch.eg_bad_sperre_fbh_cmd
-    started: input_datetime.eg_bad_fbh_sperre_started
-    runtime_sec: 3600
+    runtime_min: "{{ states('input_number.fbh_sperre_rearm_minutes_ug_bad') | int(60) }}"
+    runtime_sec: "{{ (runtime_min * 60) | int }}"
   action:
     - choose:
-        - conditions: "{{ trigger.platform == 'state' and trigger.to_state.state == 'off' }}"
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'state' and trigger.to_state.state == 'off' }}"
           sequence:
             - service: input_datetime.set_datetime
-              target: { entity_id: "{{ started }}" }
-              data: { datetime: "{{ now().isoformat() }}" }
-            - delay: { seconds: "{{ runtime_sec }}" }
+              target:
+                entity_id: input_datetime.ug_bad_fbh_sperre_started
+              data:
+                datetime: "{{ now().isoformat() }}"
+            - delay:
+                seconds: "{{ runtime_sec }}"
             - condition: state
-              entity_id: "{{ lock }}"
+              entity_id: switch.ug_bad_sperre_fbh
               state: "off"
             - service: switch.turn_on
-              target: { entity_id: "{{ lock }}" }
+              target:
+                entity_id: switch.ug_bad_sperre_fbh
 
-        - conditions: "{{ trigger.platform == 'state' and trigger.to_state.state == 'on' }}"
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'state' and trigger.to_state.state == 'on' }}"
           sequence:
             - service: input_datetime.set_datetime
-             target: { entity_id: "{{ started }}" }
-              data: { datetime: "1970-01-01T00:00:00" }
+              target:
+                entity_id: input_datetime.ug_bad_fbh_sperre_started
+              data:
+                datetime: "1970-01-01T00:00:00"
 
-        - conditions: "{{ trigger.platform == 'homeassistant' }}"
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'homeassistant' }}"
           sequence:
             - condition: state
-              entity_id: "{{ lock }}"
+              entity_id: switch.ug_bad_sperre_fbh
               state: "off"
             - variables:
-                started_ts: "{{ as_timestamp(states(started), 0) }}"
+                started_ts: "{{ as_timestamp(states('input_datetime.ug_bad_fbh_sperre_started'), 0) }}"
                 elapsed: "{{ as_timestamp(now()) - started_ts }}"
             - choose:
-                - conditions: "{{ started_ts > 0 and elapsed >= runtime_sec }}"
+                - conditions:
+                    - condition: template
+                      value_template: "{{ started_ts > 0 and elapsed >= runtime_sec }}"
                   sequence:
                     - service: switch.turn_on
-                      target: { entity_id: "{{ lock }}" }
-                - conditions: "{{ started_ts > 0 and elapsed < runtime_sec }}"
+                      target:
+                        entity_id: switch.ug_bad_sperre_fbh
+                - conditions:
+                    - condition: template
+                      value_template: "{{ started_ts > 0 and elapsed < runtime_sec }}"
                   sequence:
-                    - delay: { seconds: "{{ (runtime_sec - elapsed) | int }}" }
+                    - delay:
+                        seconds: "{{ (runtime_sec - elapsed) | int }}"
                     - condition: state
-                      entity_id: "{{ lock }}"
+                      entity_id: switch.ug_bad_sperre_fbh
                       state: "off"
                     - service: switch.turn_on
-                      target: { entity_id: "{{ lock }}" }
+                      target:
+                        entity_id: switch.ug_bad_sperre_fbh
 
-- id: heizung_og_bad_fbh_sperre_rearm_60m
-  alias: "OG Bad FBH: Sperre nach 60 min wieder setzen"
+- id: heizung_eg_bad_fbh_sperre_rearm
+  alias: "EG Bad FBH: Sperre nach Timer wieder setzen"
   mode: restart
   trigger:
     - platform: state
-      entity_id: switch.og_bad_sperre_fbh_cmd
+      entity_id: switch.eg_bad_sperre_fbh
       to: "off"
     - platform: state
-      entity_id: switch.og_bad_sperre_fbh_cmd
+      entity_id: switch.eg_bad_sperre_fbh
       to: "on"
     - platform: homeassistant
       event: start
   variables:
-    lock: switch.og_bad_sperre_fbh_cmd
-    started: input_datetime.og_bad_fbh_sperre_started
-    runtime_sec: 3600
+    runtime_min: "{{ states('input_number.fbh_sperre_rearm_minutes_eg_bad') | int(60) }}"
+    runtime_sec: "{{ (runtime_min * 60) | int }}"
   action:
     - choose:
-        - conditions: "{{ trigger.platform == 'state' and trigger.to_state.state == 'off' }}"
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'state' and trigger.to_state.state == 'off' }}"
           sequence:
             - service: input_datetime.set_datetime
-              target: { entity_id: "{{ started }}" }
-              data: { datetime: "{{ now().isoformat() }}" }
-            - delay: { seconds: "{{ runtime_sec }}" }
+              target:
+                entity_id: input_datetime.eg_bad_fbh_sperre_started
+              data:
+                datetime: "{{ now().isoformat() }}"
+            - delay:
+                seconds: "{{ runtime_sec }}"
             - condition: state
-              entity_id: "{{ lock }}"
+              entity_id: switch.eg_bad_sperre_fbh
               state: "off"
             - service: switch.turn_on
-              target: { entity_id: "{{ lock }}" }
+              target:
+                entity_id: switch.eg_bad_sperre_fbh
 
-        - conditions: "{{ trigger.platform == 'state' and trigger.to_state.state == 'on' }}"
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'state' and trigger.to_state.state == 'on' }}"
           sequence:
             - service: input_datetime.set_datetime
-              target: { entity_id: "{{ started }}" }
-              data: { datetime: "1970-01-01T00:00:00" }
+              target:
+                entity_id: input_datetime.eg_bad_fbh_sperre_started
+              data:
+                datetime: "1970-01-01T00:00:00"
 
-        - conditions: "{{ trigger.platform == 'homeassistant' }}"
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'homeassistant' }}"
           sequence:
             - condition: state
-              entity_id: "{{ lock }}"
+              entity_id: switch.eg_bad_sperre_fbh
               state: "off"
             - variables:
-                started_ts: "{{ as_timestamp(states(started), 0) }}"
+                started_ts: "{{ as_timestamp(states('input_datetime.eg_bad_fbh_sperre_started'), 0) }}"
                 elapsed: "{{ as_timestamp(now()) - started_ts }}"
             - choose:
-                - conditions: "{{ started_ts > 0 and elapsed >= runtime_sec }}"
+                - conditions:
+                    - condition: template
+                      value_template: "{{ started_ts > 0 and elapsed >= runtime_sec }}"
                   sequence:
                     - service: switch.turn_on
-                      target: { entity_id: "{{ lock }}" }
-                - conditions: "{{ started_ts > 0 and elapsed < runtime_sec }}"
+                      target:
+                        entity_id: switch.eg_bad_sperre_fbh
+                - conditions:
+                    - condition: template
+                      value_template: "{{ started_ts > 0 and elapsed < runtime_sec }}"
                   sequence:
-                    - delay: { seconds: "{{ (runtime_sec - elapsed) | int }}" }
+                    - delay:
+                        seconds: "{{ (runtime_sec - elapsed) | int }}"
                     - condition: state
-                      entity_id: "{{ lock }}"
+                      entity_id: switch.eg_bad_sperre_fbh
                       state: "off"
                     - service: switch.turn_on
-                      target: { entity_id: "{{ lock }}" }
+                      target:
+                        entity_id: switch.eg_bad_sperre_fbh
+
+- id: heizung_og_bad_fbh_sperre_rearm
+  alias: "OG Bad FBH: Sperre nach Timer wieder setzen"
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: switch.og_bad_sperre_fbh
+      to: "off"
+    - platform: state
+      entity_id: switch.og_bad_sperre_fbh
+      to: "on"
+    - platform: homeassistant
+      event: start
+  variables:
+    runtime_min: "{{ states('input_number.fbh_sperre_rearm_minutes_og_bad') | int(60) }}"
+    runtime_sec: "{{ (runtime_min * 60) | int }}"
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'state' and trigger.to_state.state == 'off' }}"
+          sequence:
+            - service: input_datetime.set_datetime
+              target:
+                entity_id: input_datetime.og_bad_fbh_sperre_started
+              data:
+                datetime: "{{ now().isoformat() }}"
+            - delay:
+                seconds: "{{ runtime_sec }}"
+            - condition: state
+              entity_id: switch.og_bad_sperre_fbh
+              state: "off"
+            - service: switch.turn_on
+              target:
+                entity_id: switch.og_bad_sperre_fbh
+
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'state' and trigger.to_state.state == 'on' }}"
+          sequence:
+            - service: input_datetime.set_datetime
+              target:
+                entity_id: input_datetime.og_bad_fbh_sperre_started
+              data:
+                datetime: "1970-01-01T00:00:00"
+
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.platform == 'homeassistant' }}"
+          sequence:
+            - condition: state
+              entity_id: switch.og_bad_sperre_fbh
+              state: "off"
+            - variables:
+                started_ts: "{{ as_timestamp(states('input_datetime.og_bad_fbh_sperre_started'), 0) }}"
+                elapsed: "{{ as_timestamp(now()) - started_ts }}"
+            - choose:
+                - conditions:
+                    - condition: template
+                      value_template: "{{ started_ts > 0 and elapsed >= runtime_sec }}"
+                  sequence:
+                    - service: switch.turn_on
+                      target:
+                        entity_id: switch.og_bad_sperre_fbh
+                - conditions:
+                    - condition: template
+                      value_template: "{{ started_ts > 0 and elapsed < runtime_sec }}"
+                  sequence:
+                    - delay:
+                        seconds: "{{ (runtime_sec - elapsed) | int }}"
+                    - condition: state
+                      entity_id: switch.og_bad_sperre_fbh
+                      state: "off"
+                    - service: switch.turn_on
+                      target:
+                        entity_id: switch.og_bad_sperre_fbh

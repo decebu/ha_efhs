@@ -1,1 +1,22 @@
-# intentionally empty
+# ─────────────────────────────
+# HEIZUNG – Betriebsstunden Reset (nur Bäder)
+# Sendet einen Impuls auf das Reset-Objekt
+# ─────────────────────────────
+
+# ─────────────────────────────
+# UG BAD – FBH
+# ─────────────────────────────
+- name: ug_bad_fbh_betriebsstunden_reset
+  address: "6/1/1"
+
+# ─────────────────────────────
+# EG BAD – FBH
+# ─────────────────────────────
+- name: eg_bad_fbh_betriebsstunden_reset
+  address: "6/2/1"
+
+# ─────────────────────────────
+# OG BAD – FBH
+# ─────────────────────────────
+- name: og_bad_fbh_betriebsstunden_reset
+  address: "6/3/1"

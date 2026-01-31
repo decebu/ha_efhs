@@ -2,295 +2,295 @@
 # AS Wetterstation
 # ─────────────────────────────
 - name: as_zen_wet_regen_state
-  address: "11/2/1"
-  device_class: rain
+  state_address: "11/2/1"
+  device_class: moisture
 
 - name: as_zen_wet_vereisung_state
-  address: "11/2/2"
+  state_address: "11/2/2"
   device_class: cold
 
 - name: as_zen_wet_wind_alarm_state
-  address: "11/2/0"
+  state_address: "11/2/0"
   device_class: safety
 
 - name: as_zen_wet_heizspannung_state
-  address: "11/2/6"
+  state_address: "11/2/6"
   device_class: problem
 
 - name: as_zen_wet_windsensor_state
-  address: "11/2/4"
+  state_address: "11/2/4"
   device_class: problem
 
 - name: as_zen_wet_keinwind_state
-  address: "11/2/5"
+  state_address: "11/2/5"
   device_class: problem
 
 # ─────────────────────────────
 # DG Buehne
 # ─────────────────────────────
 - name: dg_dst_jalousie_o_ungueltig_state
-  address: "5/4/9"
+  state_address: "5/4/9"
   device_class: problem
 
 - name: dg_dst_jalousie_w_ungueltig_state
-  address: "5/4/19"
+  state_address: "5/4/19"
   device_class: problem
 
 # ─────────────────────────────
 # EG Bad
 # ─────────────────────────────
 - name: eg_bad_stellwert_state
-  address: "4/2/4"
+  state_address: "4/2/4"
   device_class: heat
 
 - name: eg_bad_jalousie_n_ungueltig_state
-  address: "5/2/9"
+  state_address: "5/2/9"
   device_class: problem
 
 - name: eg_bad_jalousie_w_ungueltig_state
-  address: "5/2/19"
+  state_address: "5/2/19"
   device_class: problem
 
 # ─────────────────────────────
 # EG Bad_FBH
 # ─────────────────────────────
 - name: eg_bad_fbh_stellwert_state
-  address: "4/2/14"
+  state_address: "4/2/14"
   device_class: heat
 
 # ─────────────────────────────
 # EG Kueche
 # ─────────────────────────────
 - name: eg_kue_jalousie_n_ungueltig_state
-  address: "5/2/49"
+  state_address: "5/2/49"
   device_class: problem
 
 - name: eg_kue_jalousie_o_ungueltig_state
-  address: "5/2/59"
+  state_address: "5/2/59"
   device_class: problem
 
 # ─────────────────────────────
 # EG Schlafen
 # ─────────────────────────────
 - name: eg_sch_stellwert_state
-  address: "4/2/24"
+  state_address: "4/2/24"
   device_class: heat
 
 # ─────────────────────────────
 # EG Schlafzimmer
 # ─────────────────────────────
 - name: eg_sch_jalousie_t_ungueltig_state
-  address: "5/2/29"
+  state_address: "5/2/29"
   device_class: problem
 
 - name: eg_sch_jalousie_f_ungueltig_state
-  address: "5/2/39"
+  state_address: "5/2/39"
   device_class: problem
 
 # ─────────────────────────────
 # EG WC
 # ─────────────────────────────
 - name: eg_wc_jalousie_n_ungueltig_state
-  address: "5/2/129"
+  state_address: "5/2/129"
   device_class: problem
 
 # ─────────────────────────────
 # EG Wohnen
 # ─────────────────────────────
 - name: eg_woh_stellwert_state
-  address: "4/2/34"
+  state_address: "4/2/34"
   device_class: heat
 
 - name: eg_woh_jalousie_o_ungueltig_state
-  address: "5/2/69"
+  state_address: "5/2/69"
   device_class: problem
 
 - name: eg_woh_jalousie_e_ungueltig_state
-  address: "5/2/79"
+  state_address: "5/2/79"
   device_class: problem
 
 - name: eg_woh_jalousie_t_ungueltig_state
-  address: "5/2/89"
+  state_address: "5/2/89"
   device_class: problem
 
 - name: eg_woh_jalousie_w_ungueltig_state
-  address: "5/2/109"
+  state_address: "5/2/109"
   device_class: problem
 
 # ─────────────────────────────
 # EG Zentral
 # ─────────────────────────────
 - name: eg_zen_pumpe_vorlauf_wand_state
-  address: "4/0/51"
+  state_address: "4/0/51"
   device_class: running
 
 - name: eg_zen_pumpe_vorlauf_lueftung_state
-  address: "4/0/56"
+  state_address: "4/0/56"
   device_class: running
 
 - name: eg_zen_pumpe_vorlauf_ofen_state
-  address: "4/0/61"
+  state_address: "4/0/61"
   device_class: running
 
 - name: eg_zen_pumpe_kaskade_ug_state
-  address: "4/0/40"
+  state_address: "4/0/40"
   device_class: running
 
 - name: eg_zen_pumpe_kaskade_eg_state
-  address: "4/0/41"
+  state_address: "4/0/41"
   device_class: running
 
 - name: eg_zen_pumpe_kaskade_og_state
-  address: "4/0/42"
+  state_address: "4/0/42"
   device_class: running
 
 # ─────────────────────────────
 # OG Bad
 # ─────────────────────────────
 - name: og_bad_stellwert_state
-  address: "4/3/4"
+  state_address: "4/3/4"
   device_class: heat
 
 - name: og_bad_jalousie_n_ungueltig_state
-  address: "5/3/9"
+  state_address: "5/3/9"
   device_class: problem
 
 - name: og_bad_jalousie_w_ungueltig_state
-  address: "5/3/19"
+  state_address: "5/3/19"
   device_class: problem
 
 # ─────────────────────────────
 # OG Bad_FBH
 # ─────────────────────────────
 - name: og_bad_fbh_stellwert_state
-  address: "4/3/14"
+  state_address: "4/3/14"
   device_class: heat
 
 # ─────────────────────────────
 # OG Diele
 # ─────────────────────────────
 - name: og_die_jalousie_n_ungueltig_state
-  address: "5/3/49"
+  state_address: "5/3/49"
   device_class: problem
 
 - name: og_die_jalousie_s_ungueltig_state
-  address: "5/3/59"
+  state_address: "5/3/59"
   device_class: problem
 
 # ─────────────────────────────
 # OG Gaeste
 # ─────────────────────────────
 - name: og_gae_jalousie_n_ungueltig_state
-  address: "5/3/69"
+  state_address: "5/3/69"
   device_class: problem
 
 - name: og_gae_jalousie_o_ungueltig_state
-  address: "5/3/79"
+  state_address: "5/3/79"
   device_class: problem
 
 # ─────────────────────────────
 # OG Gast
 # ─────────────────────────────
 - name: og_gas_stellwert_state
-  address: "4/3/44"
+  state_address: "4/3/44"
   device_class: heat
 
 # ─────────────────────────────
 # OG Kueche
 # ─────────────────────────────
 - name: og_kue_stellwert_state
-  address: "4/3/34"
+  state_address: "4/3/34"
   device_class: heat
 
 # ─────────────────────────────
 # OG Schlafen
 # ─────────────────────────────
 - name: og_sch_stellwert_state
-  address: "4/3/54"
+  state_address: "4/3/54"
   device_class: heat
 
 - name: og_sch_jalousie_o_ungueltig_state
-  address: "5/3/89"
+  state_address: "5/3/89"
   device_class: problem
 
 - name: og_sch_jalousie_s_ungueltig_state
-  address: "5/3/99"
+  state_address: "5/3/99"
   device_class: problem
 
 # ─────────────────────────────
 # OG Wohnen
 # ─────────────────────────────
 - name: og_woh_stellwert_state
-  address: "4/3/24"
+  state_address: "4/3/24"
   device_class: heat
 
 - name: og_woh_jalousie_s_ungueltig_state
-  address: "5/3/29"
+  state_address: "5/3/29"
   device_class: problem
 
 - name: og_woh_jalousie_w_ungueltig_state
-  address: "5/3/39"
+  state_address: "5/3/39"
   device_class: problem
 
 # ─────────────────────────────
 # UG Bad
 # ─────────────────────────────
 - name: ug_bad_stellwert_state
-  address: "4/1/4"
+  state_address: "4/1/4"
   device_class: heat
 
 - name: ug_bad_jalousie_w_ungueltig_state
-  address: "5/1/9"
+  state_address: "5/1/9"
   device_class: problem
 
 # ─────────────────────────────
 # UG Bad_FBH
 # ─────────────────────────────
 - name: ug_bad_fbh_stellwert_state
-  address: "4/1/14"
+  state_address: "4/1/14"
   device_class: heat
 
 # ─────────────────────────────
 # UG Flur
 # ─────────────────────────────
 - name: ug_flu_stellwert_state
-  address: "4/1/24"
+  state_address: "4/1/24"
   device_class: heat
 
 - name: ug_flu_jalousie_w_ungueltig_state
-  address: "5/1/19"
+  state_address: "5/1/19"
   device_class: problem
 
 # ─────────────────────────────
 # UG Kueche
 # ─────────────────────────────
 - name: ug_kue_jalousie_o_ungueltig_state
-  address: "5/1/39"
+  state_address: "5/1/39"
   device_class: problem
 
 # ─────────────────────────────
 # UG Schlafen
 # ─────────────────────────────
 - name: ug_sch_stellwert_state
-  address: "4/1/34"
+  state_address: "4/1/34"
   device_class: heat
 
 - name: ug_sch_jalousie_s_ungueltig_state
-  address: "5/1/29"
+  state_address: "5/1/29"
   device_class: problem
 
 # ─────────────────────────────
 # UG Wohnen
 # ─────────────────────────────
 - name: ug_woh_stellwert_state
-  address: "4/1/44"
+  state_address: "4/1/44"
   device_class: heat
 
 - name: ug_woh_jalousie_s_ungueltig_state
-  address: "5/1/49"
+  state_address: "5/1/49"
   device_class: problem
 
 - name: ug_woh_jalousie_s_ungueltig_state
-  address: "5/1/59"
+  state_address: "5/1/59"
   device_class: problem
 

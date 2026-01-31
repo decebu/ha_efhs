@@ -5,7 +5,6 @@
   state_address: "11/0/0"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
 
 - name: as_zen_wet_wind_speed
   state_address: "11/0/7"
@@ -30,11 +29,6 @@
   state_address: "4/2/0"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: eg_bad_knx_temp
-  state_address: "4/2/0"
-  type: temperature
 
 - name: eg_bad_setpoint_abs
   state_address: "4/2/3"
@@ -48,15 +42,14 @@
 # ─────────────────────────────
 # EG Bad_FBH
 # ─────────────────────────────
+- name: eg_bad_fbh_betriebsstunden
+  state_address: "6/2/0"
+  type: 2byte_unsigned
+
 - name: eg_bad_fbh_temp
   state_address: "4/2/10"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: eg_bad_fbh_knx_temp
-  state_address: "4/2/10"
-  type: temperature
 
 - name: eg_bad_fbh_setpoint_abs
   state_address: "4/2/13"
@@ -74,11 +67,6 @@
   state_address: "4/2/20"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: eg_sch_knx_temp
-  state_address: "4/2/20"
-  type: temperature
 
 - name: eg_sch_setpoint_abs
   state_address: "4/2/23"
@@ -96,11 +84,6 @@
   state_address: "4/2/30"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: eg_woh_knx_temp
-  state_address: "4/2/30"
-  type: temperature
 
 - name: eg_woh_setpoint_abs
   state_address: "4/2/33"
@@ -118,11 +101,6 @@
   state_address: "4/3/0"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: og_bad_knx_temp
-  state_address: "4/3/0"
-  type: temperature
 
 - name: og_bad_setpoint_abs
   state_address: "4/3/3"
@@ -136,15 +114,14 @@
 # ─────────────────────────────
 # OG Bad_FBH
 # ─────────────────────────────
+- name: og_bad_fbh_betriebsstunden
+  state_address: "6/3/0"
+  type: 2byte_unsigned
+
 - name: og_bad_fbh_temp
   state_address: "4/3/10"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: og_bad_fbh_knx_temp
-  state_address: "4/3/10"
-  type: temperature
 
 - name: og_bad_fbh_setpoint_abs
   state_address: "4/3/13"
@@ -162,11 +139,6 @@
   state_address: "4/3/40"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: og_gas_knx_temp
-  state_address: "4/3/40"
-  type: temperature
 
 - name: og_gas_setpoint_abs
   state_address: "4/3/43"
@@ -184,11 +156,6 @@
   state_address: "4/3/30"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: og_kue_knx_temp
-  state_address: "4/3/30"
-  type: temperature
 
 - name: og_kue_setpoint_abs
   state_address: "4/3/33"
@@ -206,11 +173,6 @@
   state_address: "4/3/50"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: og_sch_knx_temp
-  state_address: "4/3/50"
-  type: temperature
 
 - name: og_sch_setpoint_abs
   state_address: "4/3/53"
@@ -228,11 +190,6 @@
   state_address: "4/3/20"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: og_woh_knx_temp
-  state_address: "4/3/20"
-  type: temperature
 
 - name: og_woh_setpoint_abs
   state_address: "4/3/23"
@@ -250,11 +207,6 @@
   state_address: "4/1/0"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: ug_bad_knx_temp
-  state_address: "4/1/0"
-  type: temperature
 
 - name: ug_bad_setpoint_abs
   state_address: "4/1/3"
@@ -268,15 +220,14 @@
 # ─────────────────────────────
 # UG Bad_FBH
 # ─────────────────────────────
+- name: ug_bad_fbh_betriebsstunden
+  state_address: "6/1/0"
+  type: 2byte_unsigned
+
 - name: ug_bad_fbh_temp
   state_address: "4/1/10"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: ug_bad_fbh_knx_temp
-  state_address: "4/1/10"
-  type: temperature
 
 - name: ug_bad_fbh_setpoint_abs
   state_address: "4/1/13"
@@ -294,11 +245,6 @@
   state_address: "4/1/20"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: ug_flu_knx_temp
-  state_address: "4/1/20"
-  type: temperature
 
 - name: ug_flu_setpoint_abs
   state_address: "4/1/23"
@@ -316,11 +262,6 @@
   state_address: "4/1/30"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: ug_sch_knx_temp
-  state_address: "4/1/30"
-  type: temperature
 
 - name: ug_sch_setpoint_abs
   state_address: "4/1/33"
@@ -338,11 +279,6 @@
   state_address: "4/1/40"
   type: temperature
   state_class: measurement
-  unit_of_measurement: "°C"
-
-- name: ug_woh_knx_temp
-  state_address: "4/1/40"
-  type: temperature
 
 - name: ug_woh_setpoint_abs
   state_address: "4/1/43"

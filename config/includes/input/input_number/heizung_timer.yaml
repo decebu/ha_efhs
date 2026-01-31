@@ -1,0 +1,45 @@
+# ─────────────────────────────
+# Heizung – Timer Helfer (Minuten)
+# ─────────────────────────────
+
+# ─────────────────────────────
+# FBH Sperre Auto-Rearm (je Bad)
+# ─────────────────────────────
+fbh_sperre_rearm_minutes_ug_bad:
+  name: "UG Bad: FBH Sperre Auto-Rearm (Min)"
+  min: 1
+  max: 240
+  step: 1
+  unit_of_measurement: "min"
+  mode: box
+  initial: 60
+
+fbh_sperre_rearm_minutes_eg_bad:
+  name: "EG Bad: FBH Sperre Auto-Rearm (Min)"
+  min: 1
+  max: 240
+  step: 1
+  unit_of_measurement: "min"
+  mode: box
+  initial: 60
+
+fbh_sperre_rearm_minutes_og_bad:
+  name: "OG Bad: FBH Sperre Auto-Rearm (Min)"
+  min: 1
+  max: 240
+  step: 1
+  unit_of_measurement: "min"
+  mode: box
+  initial: 60
+
+# ─────────────────────────────
+# Kaminbank (EG Wohnen): Zwang Auto-Reset
+# ─────────────────────────────
+kaminbank_zwang_reset_minutes_eg_woh:
+  name: "EG Wohnen Kaminbank: Zwang Reset (Min)"
+  min: 1
+  max: 240
+  step: 1
+  unit_of_measurement: "min"
+  mode: box
+  initial: 30

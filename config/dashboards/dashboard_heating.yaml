@@ -1,0 +1,161 @@
+title: Heizung
+views:
+  - title: FBH Test
+    path: fbh-test
+    icon: mdi:heat-wave
+    cards:
+      - type: markdown
+        title: FBH Test / Debug
+        content: |
+          **Sperre-Logik (Bäder):**
+          - **ON = gesperrt**
+          - **OFF = freigegeben**
+          - Nach Ablauf des Timers setzt HA die Sperre wieder auf **ON**.
+
+          **Quick-Test:** Setze Timer z. B. auf **1 Minute**, schalte Sperre **OFF** → nach ~60s muss sie wieder **ON** sein.
+
+      # ─────────────────────────────
+      # Timer-Helper je Bad
+      # ─────────────────────────────
+      - type: entities
+        title: Timer-Einstellungen
+        show_header_toggle: false
+        entities:
+          - entity: input_number.fbh_sperre_rearm_minutes_ug_bad
+            name: UG Bad – Auto-Rearm (Min)
+          - entity: input_number.fbh_sperre_rearm_minutes_eg_bad
+            name: EG Bad – Auto-Rearm (Min)
+          - entity: input_number.fbh_sperre_rearm_minutes_og_bad
+            name: OG Bad – Auto-Rearm (Min)
+
+      # ─────────────────────────────
+      # UG BAD
+      # ─────────────────────────────
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: UG Bad – Raum (Thermostat)
+            show_header_toggle: false
+            entities:
+              - entity: sensor.ug_bad_temp
+                name: Ist-Temperatur (Messwert)
+              - entity: sensor.ug_bad_setpoint_abs
+                name: Soll-Temperatur (absolut)
+              - entity: sensor.ug_bad_hvac_status_raw
+                name: HVAC Status (raw)
+              - entity: binary_sensor.ug_bad_stellwert_state
+                name: Stellwert (1bit) / Heizanforderung
+
+          - type: entities
+            title: UG Bad – FBH (Sperre / Status)
+            show_header_toggle: false
+            entities:
+              - entity: switch.ug_bad_sperre_fbh
+                name: FBH Sperre (ON=gesperrt)
+              - entity: input_datetime.ug_bad_fbh_sperre_started
+                name: Freigabe Startzeit
+              - entity: binary_sensor.ug_bad_fbh_stellwert_state
+                name: FBH Stellwert (1bit) / Heizanforderung
+              - entity: sensor.ug_bad_fbh_betriebsstunden
+                name: FBH Betriebsstunden
+              - entity: button.ug_bad_fbh_betriebsstunden_reset
+                name: Betriebsstunden Reset
+
+          - type: entities
+            title: UG Bad – FBH (Temperatur / Soll / Status)
+            show_header_toggle: false
+            entities:
+              - entity: sensor.ug_bad_fbh_temp
+                name: Ist-Temperatur (Messwert)
+              - entity: sensor.ug_bad_fbh_setpoint_abs
+                name: Soll-Temperatur (absolut)
+              - entity: sensor.ug_bad_fbh_hvac_status_raw
+                name: HVAC Status (raw)
+
+      # ─────────────────────────────
+      # EG BAD
+      # ─────────────────────────────
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: EG Bad – Raum (Thermostat)
+            show_header_toggle: false
+            entities:
+              - entity: sensor.eg_bad_temp
+                name: Ist-Temperatur (Messwert)
+              - entity: sensor.eg_bad_setpoint_abs
+                name: Soll-Temperatur (absolut)
+              - entity: sensor.eg_bad_hvac_status_raw
+                name: HVAC Status (raw)
+              - entity: binary_sensor.eg_bad_stellwert_state
+                name: Stellwert (1bit) / Heizanforderung
+
+          - type: entities
+            title: EG Bad – FBH (Sperre / Status)
+            show_header_toggle: false
+            entities:
+              - entity: switch.eg_bad_sperre_fbh
+                name: FBH Sperre (ON=gesperrt)
+              - entity: input_datetime.eg_bad_fbh_sperre_started
+                name: Freigabe Startzeit
+              - entity: binary_sensor.eg_bad_fbh_stellwert_state
+                name: FBH Stellwert (1bit) / Heizanforderung
+              - entity: sensor.eg_bad_fbh_betriebsstunden
+                name: FBH Betriebsstunden
+              - entity: button.eg_bad_fbh_betriebsstunden_reset
+                name: Betriebsstunden Reset
+
+          - type: entities
+            title: EG Bad – FBH (Temperatur / Soll / Status)
+            show_header_toggle: false
+            entities:
+              - entity: sensor.eg_bad_fbh_temp
+                name: Ist-Temperatur (Messwert)
+              - entity: sensor.eg_bad_fbh_setpoint_abs
+                name: Soll-Temperatur (absolut)
+              - entity: sensor.eg_bad_fbh_hvac_status_raw
+                name: HVAC Status (raw)
+
+      # ─────────────────────────────
+      # OG BAD
+      # ─────────────────────────────
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: OG Bad – Raum (Thermostat)
+            show_header_toggle: false
+            entities:
+              - entity: sensor.og_bad_temp
+                name: Ist-Temperatur (Messwert)
+              - entity: sensor.og_bad_setpoint_abs
+                name: Soll-Temperatur (absolut)
+              - entity: sensor.og_bad_hvac_status_raw
+                name: HVAC Status (raw)
+              - entity: binary_sensor.og_bad_stellwert_state
+                name: Stellwert (1bit) / Heizanforderung
+
+          - type: entities
+            title: OG Bad – FBH (Sperre / Status)
+            show_header_toggle: false
+            entities:
+              - entity: switch.og_bad_sperre_fbh
+                name: FBH Sperre (ON=gesperrt)
+              - entity: input_datetime.og_bad_fbh_sperre_started
+                name: Freigabe Startzeit
+              - entity: binary_sensor.og_bad_fbh_stellwert_state
+                name: FBH Stellwert (1bit) / Heizanforderung
+              - entity: sensor.og_bad_fbh_betriebsstunden
+                name: FBH Betriebsstunden
+              - entity: button.og_bad_fbh_betriebsstunden_reset
+                name: Betriebsstunden Reset
+
+          - type: entities
+            title: OG Bad – FBH (Temperatur / Soll / Status)
+            show_header_toggle: false
+            entities:
+              - entity: sensor.og_bad_fbh_temp
+                name: Ist-Temperatur (Messwert)
+              - entity: sensor.og_bad_fbh_setpoint_abs
+                name: Soll-Temperatur (absolut)
+              - entity: sensor.og_bad_fbh_hvac_status_raw
+                name: HVAC Status (raw)

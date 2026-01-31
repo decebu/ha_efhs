@@ -1,62 +1,84 @@
-# Includes
-!knx/*
+# ==========================================
+# Home Assistant Core & System
+# ==========================================
+# Ignoriere alle Datenbanken und temporären Laufzeitdateien
+config/*.db
+config/*.db-shm
+config/*.db-wal
+config/*.db-journal
+config/*.sqlite
+config/*.log
+config/*.noload
+config/.HA_VERSION
+config/.google.token
+config/home-assistant.env
+config/home-assistant.log*
+config/home-assistant.log.*
 
-# Logs
-logs
-*.log
-# Python cache
-__pycache__
+# Ignoriere Verzeichnisse mit temporären Daten oder Caches
+config/.cloud/
+config/.storage/
+config/deps/
+config/tts/
+config/backups/
+config/downloads/
+config/icloud/
+config/.pc-session
+config/.homekit.state
+**/__pycache__/
 *.pyc
-
-# Other
-*.lock
-*.uuid
-*.conf
-*.db
-*.db-journal
-*.log
-*.noload
-*.txt
-*.sqlite
-*.xml
-*.backup
-*.bak
-life360.sh
-.ip_authenticated.yaml
-ip_bans.yaml
-.config_entries.json
-*.google.token
-.google.token
-.ring_cache.pickle
-.spotify-token-cache
-.storage
-abodepy_cache.pickle
-camera_recording.py
-home-assistant.env
-home-assistant*.*
-known_devices.yaml
-entity_registry.yaml
-secrets.yaml
-google_calendars.yaml
-SERVICE_ACCOUNT.json
-components
-deps
-tts
-www/icons
-www/floorplans
-www/community
-custom_components/*
-downloads
-icloud
-dlib_faces
-dlib_nofaces
-dlib_known_faces
-dlib_unknown_faces
-.cloud
-*.pickle
-.pc-session
-google*.deb
-.homekit.state
-.HA_VERSION
 venv/
-themes/
+
+# ==========================================
+# Sensible Daten & Token (Sicherheit)
+# ==========================================
+config/secrets.yaml
+**/SERVICE_ACCOUNT.json
+**/*.pickle
+**/*.google.token
+**/.spotify-token-cache
+**/ip_bans.yaml
+**/.ip_authenticated.yaml
+**/known_devices.yaml
+
+# ==========================================
+# Infrastruktur & Docker
+# ==========================================
+# Docker-Compose gehört künftig ins Fleet-Repo, nicht ins Kunden-Repo
+docker-compose.yml
+.env
+*.lock
+
+# ==========================================
+# Custom Components & Frontend (Strategie)
+# ==========================================
+# Falls du HACS-Komponenten NICHT im Git haben willst (empfohlen):
+config/custom_components/
+
+# Falls du sie DOCH im Git haben willst, aber Caches ignorieren:
+config/custom_components/*/__pycache__/
+
+# Frontend-Reste
+config/www/community/
+config/www/icons/
+
+# ==========================================
+# Spezielle Inklusionen (Deine Anforderungen)
+# ==========================================
+# Stelle sicher, dass KNX immer getrackt wird
+!config/includes/knx/*
+!config/knx.yaml
+
+# Dashboards und Blueprints explizit erlauben (falls oben ignoriert)
+!config/dashboards/*.yaml
+!config/blueprints/**/*.yaml
+
+# ==========================================
+# OS & Editoren
+# ==========================================
+.DS_Store
+.vscode/
+.idea/
+*.bak
+*.backup
+*.tmp

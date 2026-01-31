@@ -29,6 +29,7 @@ knx: !include knx.yaml
 # input_number:  !include_dir_merge_named includes/input/input_number/
 # input_text:    !include_dir_merge_named includes/input/input_text/
 input_datetime: !include_dir_merge_named includes/input/input_datetime/
+input_number: !include_dir_merge_named includes/input/input_number/
 # notify: !include_dir_merge_list includes/notify/
 # mqtt: !include_dir_merge_list includes/mqtt/
 template: !include_dir_merge_list includes/templates/
@@ -37,8 +38,8 @@ template: !include_dir_merge_list includes/templates/
 # script: !include_dir_merge_named includes/scripts/
 # group: !include includes/groups.yaml
 
-# lovelace:
-#   mode: yaml
+lovelace:
+  mode: yaml
 #   resources:
 #     - url: /local/lovelace-mushroom/mushroom.js
 #       type: module
@@ -54,7 +55,7 @@ template: !include_dir_merge_list includes/templates/
 #       type: module
 #     - url: /local/alarmo-card/alarmo-card.js?v=0
 #       type: module
-#   dashboards:
+  dashboards:
 #     dash-rollo:
 #       mode: yaml
 #       title: Rollladensteuerung
@@ -67,12 +68,12 @@ template: !include_dir_merge_list includes/templates/
 #       icon: mdi:shield-lock-outline
 #       show_in_sidebar: true
 #       filename: dashboards/dashboard_debug.yaml
-#     dash-heat:
-#       mode: yaml
-#       title: Heizung
-#       icon: mdi:radiator
-#       show_in_sidebar: true
-#       filename: dashboards/dashboard_heating.yaml
+    dash-heat:
+      mode: yaml
+      title: Heizung
+      icon: mdi:radiator
+      show_in_sidebar: true
+      filename: dashboards/dashboard_heating.yaml
 
 # homeassistant:
 #   allowlist_external_dirs:
