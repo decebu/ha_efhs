@@ -1,0 +1,11 @@
+# Registriert das Lese-Dashboard "Heizung Diagnose" (Quelle: ha/dashboards/heizung_diagnose.yaml,
+# erzeugt von tools/gen_dashboard_heizung.py). Neue YAML-Dashboards brauchen einen HA-Neustart.
+lovelace:
+  dashboards:
+    dash-heizung-diagnose:
+      mode: yaml
+      title: Heizung Diagnose
+      icon: mdi:thermometer-lines
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/heizung_diagnose.yaml

@@ -13,6 +13,9 @@
 # License: CC-BY-NC-SA-4.0
 # ------------------------------------------------------
 
+homeassistant:
+  packages: !include_dir_named packages
+
 # Loads default set of integrations. Do not remove.
 default_config:
 

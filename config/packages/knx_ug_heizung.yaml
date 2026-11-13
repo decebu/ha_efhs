@@ -1,0 +1,345 @@
+# =====================================================================
+# Package: KNX Heizung Untergeschoss – EFH Schittenhelm
+# Quelle: BV_Schittenhelm_261113.knxproj (ETS6, Stand 2026-06-29)
+# Modus:  NUR LESEND – keine Schreib-GAs hinterlegt (Diagnose)
+# Ablage: <config>/packages/knx_ug_heizung.yaml
+# =====================================================================
+
+knx:
+  climate:
+    # UGR02_01 · KRM 1.1.63 R1 · Aktor 1.1.22 VA1
+    - name: "UG Bad"
+      temperature_address: "4/1/0"            # IST
+      target_temperature_state_address: "4/1/3"  # SOLL RM (wirksamer Sollwert)
+      operation_mode_state_address: "4/1/7"     # BETRIEBSART RM (20.102)
+      min_temp: 5
+      max_temp: 30
+    # UGR02_02 · KRM 1.1.63 R2 (Fernfühler) · Aktor 1.1.22 VA5
+    - name: "UG Bad FBH"
+      temperature_address: "4/1/10"            # IST
+      target_temperature_state_address: "4/1/13"  # SOLL RM (wirksamer Sollwert)
+      operation_mode_state_address: "4/1/17"     # BETRIEBSART RM (20.102)
+      min_temp: 5
+      max_temp: 30
+    # UGR03_01 · KRM 1.1.67 R1 · Aktor 1.1.22 VA2
+    - name: "UG Flur"
+      temperature_address: "4/1/20"            # IST
+      target_temperature_state_address: "4/1/23"  # SOLL RM (wirksamer Sollwert)
+      operation_mode_state_address: "4/1/27"     # BETRIEBSART RM (20.102)
+      min_temp: 5
+      max_temp: 30
+    # UGR04_01 · KRM 1.1.70 R1 · Aktor 1.1.22 VA3
+    - name: "UG Schlafzimmer"
+      temperature_address: "4/1/30"            # IST
+      target_temperature_state_address: "4/1/33"  # SOLL RM (wirksamer Sollwert)
+      operation_mode_state_address: "4/1/37"     # BETRIEBSART RM (20.102)
+      min_temp: 5
+      max_temp: 30
+    # UGR06_01 · KRM 1.1.74 R1 · Aktor 1.1.22 VA4
+    - name: "UG Wohnen"
+      temperature_address: "4/1/40"            # IST
+      target_temperature_state_address: "4/1/43"  # SOLL RM (wirksamer Sollwert)
+      operation_mode_state_address: "4/1/47"     # BETRIEBSART RM (20.102)
+      min_temp: 5
+      max_temp: 30
+
+  sensor:
+    # IST/SOLL je Raum und 6/1/0 Betriebsstunden: live in includes/knx/ (sensor.ug_*_temp/_setpoint_abs)
+    # Zweitfühler Wohnen (TSM 1.1.73, nur Senden) – Plausibilisierung KRM-Fühler
+    - name: "UG Wohnen IST Zweitfuehler"
+      state_address: "8/1/0"
+      type: temperature
+      sync_state: false
+
+  binary_sensor:
+    - name: "UG Bad Regler Stellwert"      # PWM 1-bit vom KRM
+      state_address: "4/1/2"
+      sync_state: false
+    - name: "UG Bad Stoerung Stellgroesse"
+      state_address: "4/1/5"
+      device_class: problem
+    - name: "UG Bad Zwangsstellung"
+      state_address: "4/1/8"
+      sync_state: false
+    - name: "UG Bad Meldung Heizen"
+      state_address: "8/1/50"
+      sync_state: false
+    - name: "UG Bad FBH Regler Stellwert"      # PWM 1-bit vom KRM
+      state_address: "4/1/12"
+      sync_state: false
+    - name: "UG Bad FBH Zwangsstellung"
+      state_address: "4/1/18"
+      sync_state: every 15
+    - name: "UG Bad FBH Meldung Heizen"
+      state_address: "8/1/51"
+      sync_state: false
+    - name: "UG Flur Regler Stellwert"      # PWM 1-bit vom KRM
+      state_address: "4/1/22"
+      sync_state: false
+    - name: "UG Flur Stoerung Stellgroesse"
+      state_address: "4/1/25"
+      device_class: problem
+    - name: "UG Flur Zwangsstellung"
+      state_address: "4/1/28"
+      sync_state: false
+    - name: "UG Flur Meldung Heizen"
+      state_address: "8/1/52"
+      sync_state: false
+    - name: "UG Schlafzimmer Regler Stellwert"      # PWM 1-bit vom KRM
+      state_address: "4/1/32"
+      sync_state: false
+    - name: "UG Schlafzimmer Stoerung Stellgroesse"
+      state_address: "4/1/35"
+      device_class: problem
+    - name: "UG Schlafzimmer Zwangsstellung"
+      state_address: "4/1/38"
+      sync_state: false
+    - name: "UG Schlafzimmer Meldung Heizen"
+      state_address: "8/1/53"
+      sync_state: false
+    - name: "UG Wohnen Regler Stellwert"      # PWM 1-bit vom KRM
+      state_address: "4/1/42"
+      sync_state: false
+    - name: "UG Wohnen Stoerung Stellgroesse"
+      state_address: "4/1/45"
+      device_class: problem
+    - name: "UG Wohnen Zwangsstellung"
+      state_address: "4/1/48"
+      sync_state: false
+    - name: "UG Wohnen Meldung Heizen"
+      state_address: "8/1/54"
+      sync_state: false
+    # --- Anlage / zentral ---
+    # Pumpenkette 4/0/40/41/42/51/56/61: live als binary_sensor.eg_zen_pumpe_* (includes/knx/)
+    - name: "HZ Sommer-Winter (0/2/6, hausweit!)"
+      state_address: "0/2/6"
+      sync_state: every 30
+    - name: "HZ Ventilspannung Ausfall UG"
+      state_address: "7/1/1"
+      device_class: problem
+      sync_state: every 30
+    - name: "HZ Pumpe Lueftung Sperre"
+      state_address: "4/0/58"
+      sync_state: every 30
+    - name: "HZ Notheizung Speicher RM"
+      state_address: "4/0/71"
+      device_class: running
+      sync_state: false
+
+# Abgeleitete Stellgröße: Einschaltdauer des Ventils (PWM) in %
+sensor:
+  - platform: history_stats
+    name: "UG Bad Ventil Einschaltdauer 2h"
+    unique_id: ug_bad_ventil_duty_2h
+    entity_id: binary_sensor.ug_bad_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 2
+  - platform: history_stats
+    name: "UG Bad Ventil Einschaltdauer 24h"
+    unique_id: ug_bad_ventil_duty_24h
+    entity_id: binary_sensor.ug_bad_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: "UG Bad FBH Ventil Einschaltdauer 2h"
+    unique_id: ug_bad_fbh_ventil_duty_2h
+    entity_id: binary_sensor.ug_bad_fbh_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 2
+  - platform: history_stats
+    name: "UG Bad FBH Ventil Einschaltdauer 24h"
+    unique_id: ug_bad_fbh_ventil_duty_24h
+    entity_id: binary_sensor.ug_bad_fbh_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: "UG Flur Ventil Einschaltdauer 2h"
+    unique_id: ug_flur_ventil_duty_2h
+    entity_id: binary_sensor.ug_flu_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 2
+  - platform: history_stats
+    name: "UG Flur Ventil Einschaltdauer 24h"
+    unique_id: ug_flur_ventil_duty_24h
+    entity_id: binary_sensor.ug_flu_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: "UG Schlafzimmer Ventil Einschaltdauer 2h"
+    unique_id: ug_schlafzimmer_ventil_duty_2h
+    entity_id: binary_sensor.ug_sch_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 2
+  - platform: history_stats
+    name: "UG Schlafzimmer Ventil Einschaltdauer 24h"
+    unique_id: ug_schlafzimmer_ventil_duty_24h
+    entity_id: binary_sensor.ug_sch_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: "UG Wohnen Ventil Einschaltdauer 2h"
+    unique_id: ug_wohnen_ventil_duty_2h
+    entity_id: binary_sensor.ug_woh_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 2
+  - platform: history_stats
+    name: "UG Wohnen Ventil Einschaltdauer 24h"
+    unique_id: ug_wohnen_ventil_duty_24h
+    entity_id: binary_sensor.ug_woh_stellwert_state
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 24
+
+# Diagnose-Flags (1 h Verzögerung gegen Fehlalarme)
+template:
+  - binary_sensor:
+      - name: "UG Bad Unterversorgt (Ventil offen, Raum kalt)"
+        unique_id: ug_bad_unterversorgt
+        device_class: problem
+        delay_on: "01:00:00"
+        state: >
+          {% set ist = states('sensor.ug_bad_temp') | float(none) %}
+          {% set soll = states('sensor.ug_bad_setpoint_abs') | float(none) %}
+          {% set duty = states('sensor.ug_bad_ventil_einschaltdauer_2h') | float(none) %}
+          {{ ist is not none and soll is not none and duty is not none
+             and ist < soll - 1.0 and duty > 80 }}
+      - name: "UG Bad Regler fordert nicht"
+        unique_id: ug_bad_regler_fordert_nicht
+        device_class: problem
+        delay_on: "01:00:00"
+        state: >
+          {% set ist = states('sensor.ug_bad_temp') | float(none) %}
+          {% set soll = states('sensor.ug_bad_setpoint_abs') | float(none) %}
+          {% set duty = states('sensor.ug_bad_ventil_einschaltdauer_2h') | float(none) %}
+          {{ ist is not none and soll is not none and duty is not none
+             and ist < soll - 1.0 and duty < 10 }}
+      - name: "UG Flur Unterversorgt (Ventil offen, Raum kalt)"
+        unique_id: ug_flur_unterversorgt
+        device_class: problem
+        delay_on: "01:00:00"
+        state: >
+          {% set ist = states('sensor.ug_flu_temp') | float(none) %}
+          {% set soll = states('sensor.ug_flu_setpoint_abs') | float(none) %}
+          {% set duty = states('sensor.ug_flur_ventil_einschaltdauer_2h') | float(none) %}
+          {{ ist is not none and soll is not none and duty is not none
+             and ist < soll - 1.0 and duty > 80 }}
+      - name: "UG Flur Regler fordert nicht"
+        unique_id: ug_flur_regler_fordert_nicht
+        device_class: problem
+        delay_on: "01:00:00"
+        state: >
+          {% set ist = states('sensor.ug_flu_temp') | float(none) %}
+          {% set soll = states('sensor.ug_flu_setpoint_abs') | float(none) %}
+          {% set duty = states('sensor.ug_flur_ventil_einschaltdauer_2h') | float(none) %}
+          {{ ist is not none and soll is not none and duty is not none
+             and ist < soll - 1.0 and duty < 10 }}
+      - name: "UG Schlafzimmer Unterversorgt (Ventil offen, Raum kalt)"
+        unique_id: ug_schlafzimmer_unterversorgt
+        device_class: problem
+        delay_on: "01:00:00"
+        state: >
+          {% set ist = states('sensor.ug_sch_temp') | float(none) %}
+          {% set soll = states('sensor.ug_sch_setpoint_abs') | float(none) %}
+          {% set duty = states('sensor.ug_schlafzimmer_ventil_einschaltdauer_2h') | float(none) %}
+          {{ ist is not none and soll is not none and duty is not none
+             and ist < soll - 1.0 and duty > 80 }}
+      - name: "UG Schlafzimmer Regler fordert nicht"
+        unique_id: ug_schlafzimmer_regler_fordert_nicht
+        device_class: problem
+        delay_on: "01:00:00"
+        state: >
+          {% set ist = states('sensor.ug_sch_temp') | float(none) %}
+          {% set soll = states('sensor.ug_sch_setpoint_abs') | float(none) %}
+          {% set duty = states('sensor.ug_schlafzimmer_ventil_einschaltdauer_2h') | float(none) %}
+          {{ ist is not none and soll is not none and duty is not none
+             and ist < soll - 1.0 and duty < 10 }}
+      - name: "UG Wohnen Unterversorgt (Ventil offen, Raum kalt)"
+        unique_id: ug_wohnen_unterversorgt
+        device_class: problem
+        delay_on: "01:00:00"
+        state: >
+          {% set ist = states('sensor.ug_woh_temp') | float(none) %}
+          {% set soll = states('sensor.ug_woh_setpoint_abs') | float(none) %}
+          {% set duty = states('sensor.ug_wohnen_ventil_einschaltdauer_2h') | float(none) %}
+          {{ ist is not none and soll is not none and duty is not none
+             and ist < soll - 1.0 and duty > 80 }}
+      - name: "UG Wohnen Regler fordert nicht"
+        unique_id: ug_wohnen_regler_fordert_nicht
+        device_class: problem
+        delay_on: "01:00:00"
+        state: >
+          {% set ist = states('sensor.ug_woh_temp') | float(none) %}
+          {% set soll = states('sensor.ug_woh_setpoint_abs') | float(none) %}
+          {% set duty = states('sensor.ug_wohnen_ventil_einschaltdauer_2h') | float(none) %}
+          {{ ist is not none and soll is not none and duty is not none
+             and ist < soll - 1.0 and duty < 10 }}
+
+# Ein Klick: alle lesbaren Objekte UG-Heizung abfragen
+script:
+  ug_heizung_lesen:
+    alias: "UG Heizung – alle Werte lesen"
+    sequence:
+      - action: knx.read
+        data:
+          address:
+            - "4/1/0"
+            - "4/1/3"
+            - "4/1/4"
+            - "4/1/5"
+            - "4/1/10"
+            - "4/1/13"
+            - "4/1/14"
+            - "4/1/20"
+            - "4/1/23"
+            - "4/1/24"
+            - "4/1/25"
+            - "4/1/30"
+            - "4/1/33"
+            - "4/1/34"
+            - "4/1/35"
+            - "4/1/40"
+            - "4/1/43"
+            - "4/1/44"
+            - "4/1/45"
+            - "4/1/2"
+            - "4/1/7"
+            - "4/1/18"
+            - "0/2/6"
+            - "7/1/1"
+            - "4/0/40"
+            - "4/0/41"
+            - "4/0/42"
+            - "4/0/51"
+            - "4/0/56"
+            - "4/0/58"
+            - "4/0/61"
+            - "6/1/0"

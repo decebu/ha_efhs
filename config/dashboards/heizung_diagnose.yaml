@@ -1,0 +1,394 @@
+# Generiert von tools/gen_dashboard_heizung.py – nicht von Hand ändern.
+# Reines Lese-Dashboard: keine Thermostat-/Schalter-Karten (kein Buswrite).
+title: Heizung Diagnose
+views:
+- title: Übersicht
+  path: uebersicht
+  icon: mdi:radiator
+  cards:
+  - type: markdown
+    title: Hinweis
+    content: 'Nur-Lese-Ansicht. Rot = mehr als 1 K unter SOLL. Ventil = Rückmeldung Heizungsaktor (PWM, 1-Bit: offen/zu). Bad-FBH ist elektrisch und im Normalzustand gesperrt.'
+  - type: markdown
+    title: UG
+    content: |-
+      | Raum | IST °C | SOLL °C | Δ K | Ventil |
+      |---|---:|---:|---:|---|
+      {% set i = states('sensor.ug_bad_temp') | float(none) %}{% set s = states('sensor.ug_bad_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_bad_stellwert_state') %}| Bad | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.ug_bad_fbh_temp') | float(none) %}{% set s = states('sensor.ug_bad_fbh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_bad_fbh_stellwert_state') %}| Bad FBH (elektr.) | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{{ d }}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.ug_flu_temp') | float(none) %}{% set s = states('sensor.ug_flu_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_flu_stellwert_state') %}| Flur | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.ug_sch_temp') | float(none) %}{% set s = states('sensor.ug_sch_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_sch_stellwert_state') %}| Schlafzimmer | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.ug_woh_temp') | float(none) %}{% set s = states('sensor.ug_woh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_woh_stellwert_state') %}| Wohnen/Essen/Küche | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+
+      FBH Bad: {{ 'gesperrt (normal)' if is_state('switch.ug_bad_sperre_fbh', 'on') else '**freigegeben** seit ' ~ relative_time(states.switch.ug_bad_sperre_fbh.last_changed) }}
+  - type: markdown
+    title: EG
+    content: |-
+      | Raum | IST °C | SOLL °C | Δ K | Ventil |
+      |---|---:|---:|---:|---|
+      {% set i = states('sensor.eg_bad_temp') | float(none) %}{% set s = states('sensor.eg_bad_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.eg_bad_stellwert_state') %}| Bad | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.eg_bad_fbh_temp') | float(none) %}{% set s = states('sensor.eg_bad_fbh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.eg_bad_fbh_stellwert_state') %}| Bad FBH (elektr.) | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{{ d }}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.eg_sch_temp') | float(none) %}{% set s = states('sensor.eg_sch_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.eg_sch_stellwert_state') %}| Schlafzimmer | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.eg_woh_temp') | float(none) %}{% set s = states('sensor.eg_woh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.eg_woh_stellwert_state') %}| Wohnen | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+
+      FBH Bad: {{ 'gesperrt (normal)' if is_state('switch.eg_bad_sperre_fbh', 'on') else '**freigegeben** seit ' ~ relative_time(states.switch.eg_bad_sperre_fbh.last_changed) }}
+  - type: markdown
+    title: OG
+    content: |-
+      | Raum | IST °C | SOLL °C | Δ K | Ventil |
+      |---|---:|---:|---:|---|
+      {% set i = states('sensor.og_bad_temp') | float(none) %}{% set s = states('sensor.og_bad_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_bad_stellwert_state') %}| Bad | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_bad_fbh_temp') | float(none) %}{% set s = states('sensor.og_bad_fbh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_bad_fbh_stellwert_state') %}| Bad FBH (elektr.) | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{{ d }}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_gas_temp') | float(none) %}{% set s = states('sensor.og_gas_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_gas_stellwert_state') %}| Gast | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_kue_temp') | float(none) %}{% set s = states('sensor.og_kue_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_kue_stellwert_state') %}| Küche | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_sch_temp') | float(none) %}{% set s = states('sensor.og_sch_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_sch_stellwert_state') %}| Schlafzimmer | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_woh_temp') | float(none) %}{% set s = states('sensor.og_woh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_woh_stellwert_state') %}| Wohnen | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+
+      FBH Bad: {{ 'gesperrt (normal)' if is_state('switch.og_bad_sperre_fbh', 'on') else '**freigegeben** seit ' ~ relative_time(states.switch.og_bad_sperre_fbh.last_changed) }}
+  - type: entities
+    title: Anlage / Pumpen
+    entities:
+    - type: simple-entity
+      entity: sensor.as_zen_wet_temp
+      name: Außentemperatur (Wetterstation)
+    - type: simple-entity
+      entity: binary_sensor.hz_sommer_winter_0_2_6_hausweit
+      name: Sommer/Winter 0/2/6 (Polarität offen)
+    - type: simple-entity
+      entity: binary_sensor.hz_ventilspannung_ausfall_ug
+      name: Ventilspannung Ausfall UG
+    - type: simple-entity
+      entity: binary_sensor.eg_zen_pumpe_kaskade_ug_state
+      name: Pumpenanforderung UG (4/0/40)
+    - type: simple-entity
+      entity: binary_sensor.eg_zen_pumpe_kaskade_eg_state
+      name: Pumpenanforderung EG (4/0/41)
+    - type: simple-entity
+      entity: binary_sensor.eg_zen_pumpe_kaskade_og_state
+      name: Pumpenanforderung OG (4/0/42)
+    - type: simple-entity
+      entity: binary_sensor.eg_zen_pumpe_vorlauf_wand_state
+      name: Pumpe Wandheizung RM (4/0/51)
+    - type: simple-entity
+      entity: binary_sensor.eg_zen_pumpe_vorlauf_lueftung_state
+      name: Pumpe Lüftung RM (4/0/56)
+    - type: simple-entity
+      entity: binary_sensor.hz_pumpe_lueftung_sperre
+      name: Pumpe Lüftung Sperre (4/0/58)
+    - type: simple-entity
+      entity: binary_sensor.eg_zen_pumpe_vorlauf_ofen_state
+      name: Pumpe Heizkörper/Ofenbank RM (4/0/61)
+    - type: simple-entity
+      entity: binary_sensor.hz_notheizung_speicher_rm
+      name: Notheizung Speicher RM (4/0/71)
+  - type: history-graph
+    title: Pumpenkette 48 h
+    hours_to_show: 48
+    entities:
+    - binary_sensor.eg_zen_pumpe_kaskade_ug_state
+    - binary_sensor.eg_zen_pumpe_kaskade_eg_state
+    - binary_sensor.eg_zen_pumpe_kaskade_og_state
+    - binary_sensor.eg_zen_pumpe_vorlauf_wand_state
+    - binary_sensor.eg_zen_pumpe_vorlauf_lueftung_state
+    - binary_sensor.hz_pumpe_lueftung_sperre
+    - binary_sensor.eg_zen_pumpe_vorlauf_ofen_state
+- title: UG
+  path: ug
+  icon: mdi:home-floor-negative-1
+  cards:
+  - type: markdown
+    title: UG – aktuell
+    content: |-
+      | Raum | IST °C | SOLL °C | Δ K | Ventil |
+      |---|---:|---:|---:|---|
+      {% set i = states('sensor.ug_bad_temp') | float(none) %}{% set s = states('sensor.ug_bad_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_bad_stellwert_state') %}| Bad | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.ug_bad_fbh_temp') | float(none) %}{% set s = states('sensor.ug_bad_fbh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_bad_fbh_stellwert_state') %}| Bad FBH (elektr.) | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{{ d }}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.ug_flu_temp') | float(none) %}{% set s = states('sensor.ug_flu_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_flu_stellwert_state') %}| Flur | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.ug_sch_temp') | float(none) %}{% set s = states('sensor.ug_sch_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_sch_stellwert_state') %}| Schlafzimmer | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.ug_woh_temp') | float(none) %}{% set s = states('sensor.ug_woh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.ug_woh_stellwert_state') %}| Wohnen/Essen/Küche | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+
+      FBH Bad: {{ 'gesperrt (normal)' if is_state('switch.ug_bad_sperre_fbh', 'on') else '**freigegeben** seit ' ~ relative_time(states.switch.ug_bad_sperre_fbh.last_changed) }}
+  - type: history-graph
+    title: UG Bad – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.ug_bad_temp
+      name: IST
+    - entity: sensor.ug_bad_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: UG Bad FBH (elektr.) – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.ug_bad_fbh_temp
+      name: IST
+    - entity: sensor.ug_bad_fbh_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: UG Flur – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.ug_flu_temp
+      name: IST
+    - entity: sensor.ug_flu_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: UG Schlafzimmer – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.ug_sch_temp
+      name: IST
+    - entity: sensor.ug_sch_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: UG Wohnen/Essen/Küche – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.ug_woh_temp
+      name: IST
+    - entity: sensor.ug_woh_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: UG Ventile (Aktor-Rückmeldung) 48 h
+    hours_to_show: 48
+    entities:
+    - entity: binary_sensor.ug_bad_stellwert_state
+      name: Bad
+    - entity: binary_sensor.ug_bad_fbh_stellwert_state
+      name: Bad FBH (elektr.)
+    - entity: binary_sensor.ug_flu_stellwert_state
+      name: Flur
+    - entity: binary_sensor.ug_sch_stellwert_state
+      name: Schlafzimmer
+    - entity: binary_sensor.ug_woh_stellwert_state
+      name: Wohnen/Essen/Küche
+  - type: entities
+    title: UG Ventil-Einschaltdauer (PWM)
+    entities:
+    - type: simple-entity
+      entity: sensor.ug_bad_ventil_einschaltdauer_2h
+      name: Bad 2 h
+    - type: simple-entity
+      entity: sensor.ug_bad_ventil_einschaltdauer_24h
+      name: Bad 24 h
+    - type: simple-entity
+      entity: sensor.ug_bad_fbh_ventil_einschaltdauer_2h
+      name: Bad FBH (elektr.) 2 h
+    - type: simple-entity
+      entity: sensor.ug_bad_fbh_ventil_einschaltdauer_24h
+      name: Bad FBH (elektr.) 24 h
+    - type: simple-entity
+      entity: sensor.ug_flur_ventil_einschaltdauer_2h
+      name: Flur 2 h
+    - type: simple-entity
+      entity: sensor.ug_flur_ventil_einschaltdauer_24h
+      name: Flur 24 h
+    - type: simple-entity
+      entity: sensor.ug_schlafzimmer_ventil_einschaltdauer_2h
+      name: Schlafzimmer 2 h
+    - type: simple-entity
+      entity: sensor.ug_schlafzimmer_ventil_einschaltdauer_24h
+      name: Schlafzimmer 24 h
+    - type: simple-entity
+      entity: sensor.ug_wohnen_ventil_einschaltdauer_2h
+      name: Wohnen/Essen/Küche 2 h
+    - type: simple-entity
+      entity: sensor.ug_wohnen_ventil_einschaltdauer_24h
+      name: Wohnen/Essen/Küche 24 h
+  - type: entities
+    title: UG Diagnose (1 h verzögert)
+    entities:
+    - type: simple-entity
+      entity: binary_sensor.ug_bad_unterversorgt_ventil_offen_raum_kalt
+      name: 'Bad: unterversorgt'
+    - type: simple-entity
+      entity: binary_sensor.ug_bad_regler_fordert_nicht
+      name: 'Bad: Regler fordert nicht'
+    - type: simple-entity
+      entity: binary_sensor.ug_flur_unterversorgt_ventil_offen_raum_kalt
+      name: 'Flur: unterversorgt'
+    - type: simple-entity
+      entity: binary_sensor.ug_flur_regler_fordert_nicht
+      name: 'Flur: Regler fordert nicht'
+    - type: simple-entity
+      entity: binary_sensor.ug_schlafzimmer_unterversorgt_ventil_offen_raum_kalt
+      name: 'Schlafzimmer: unterversorgt'
+    - type: simple-entity
+      entity: binary_sensor.ug_schlafzimmer_regler_fordert_nicht
+      name: 'Schlafzimmer: Regler fordert nicht'
+    - type: simple-entity
+      entity: binary_sensor.ug_wohnen_unterversorgt_ventil_offen_raum_kalt
+      name: 'Wohnen/Essen/Küche: unterversorgt'
+    - type: simple-entity
+      entity: binary_sensor.ug_wohnen_regler_fordert_nicht
+      name: 'Wohnen/Essen/Küche: Regler fordert nicht'
+  - type: entities
+    title: UG Störung / Zwangsstellung
+    entities:
+    - type: simple-entity
+      entity: binary_sensor.ug_bad_stoerung_stellgroesse
+      name: 'Bad: Störung'
+    - type: simple-entity
+      entity: binary_sensor.ug_flur_stoerung_stellgroesse
+      name: 'Flur: Störung'
+    - type: simple-entity
+      entity: binary_sensor.ug_schlafzimmer_stoerung_stellgroesse
+      name: 'Schlafzimmer: Störung'
+    - type: simple-entity
+      entity: binary_sensor.ug_wohnen_stoerung_stellgroesse
+      name: 'Wohnen: Störung'
+    - type: simple-entity
+      entity: binary_sensor.ug_bad_zwangsstellung
+      name: 'Bad: Zwangsstellung'
+    - type: simple-entity
+      entity: binary_sensor.ug_flur_zwangsstellung
+      name: 'Flur: Zwangsstellung'
+    - type: simple-entity
+      entity: binary_sensor.ug_schlafzimmer_zwangsstellung
+      name: 'Schlafzimmer: Zwangsstellung'
+    - type: simple-entity
+      entity: binary_sensor.ug_wohnen_zwangsstellung
+      name: 'Wohnen: Zwangsstellung'
+    - type: simple-entity
+      entity: sensor.ug_wohnen_ist_zweitfuehler
+      name: Wohnen Zweitfühler 8/1/0
+- title: EG
+  path: eg
+  icon: mdi:home-floor-0
+  cards:
+  - type: markdown
+    title: EG – aktuell
+    content: |-
+      | Raum | IST °C | SOLL °C | Δ K | Ventil |
+      |---|---:|---:|---:|---|
+      {% set i = states('sensor.eg_bad_temp') | float(none) %}{% set s = states('sensor.eg_bad_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.eg_bad_stellwert_state') %}| Bad | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.eg_bad_fbh_temp') | float(none) %}{% set s = states('sensor.eg_bad_fbh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.eg_bad_fbh_stellwert_state') %}| Bad FBH (elektr.) | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{{ d }}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.eg_sch_temp') | float(none) %}{% set s = states('sensor.eg_sch_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.eg_sch_stellwert_state') %}| Schlafzimmer | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.eg_woh_temp') | float(none) %}{% set s = states('sensor.eg_woh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.eg_woh_stellwert_state') %}| Wohnen | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+
+      FBH Bad: {{ 'gesperrt (normal)' if is_state('switch.eg_bad_sperre_fbh', 'on') else '**freigegeben** seit ' ~ relative_time(states.switch.eg_bad_sperre_fbh.last_changed) }}
+  - type: history-graph
+    title: EG Bad – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.eg_bad_temp
+      name: IST
+    - entity: sensor.eg_bad_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: EG Bad FBH (elektr.) – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.eg_bad_fbh_temp
+      name: IST
+    - entity: sensor.eg_bad_fbh_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: EG Schlafzimmer – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.eg_sch_temp
+      name: IST
+    - entity: sensor.eg_sch_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: EG Wohnen – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.eg_woh_temp
+      name: IST
+    - entity: sensor.eg_woh_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: EG Ventile (Aktor-Rückmeldung) 48 h
+    hours_to_show: 48
+    entities:
+    - entity: binary_sensor.eg_bad_stellwert_state
+      name: Bad
+    - entity: binary_sensor.eg_bad_fbh_stellwert_state
+      name: Bad FBH (elektr.)
+    - entity: binary_sensor.eg_sch_stellwert_state
+      name: Schlafzimmer
+    - entity: binary_sensor.eg_woh_stellwert_state
+      name: Wohnen
+- title: OG
+  path: og
+  icon: mdi:home-floor-1
+  cards:
+  - type: markdown
+    title: OG – aktuell
+    content: |-
+      | Raum | IST °C | SOLL °C | Δ K | Ventil |
+      |---|---:|---:|---:|---|
+      {% set i = states('sensor.og_bad_temp') | float(none) %}{% set s = states('sensor.og_bad_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_bad_stellwert_state') %}| Bad | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_bad_fbh_temp') | float(none) %}{% set s = states('sensor.og_bad_fbh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_bad_fbh_stellwert_state') %}| Bad FBH (elektr.) | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{{ d }}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_gas_temp') | float(none) %}{% set s = states('sensor.og_gas_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_gas_stellwert_state') %}| Gast | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_kue_temp') | float(none) %}{% set s = states('sensor.og_kue_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_kue_stellwert_state') %}| Küche | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_sch_temp') | float(none) %}{% set s = states('sensor.og_sch_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_sch_stellwert_state') %}| Schlafzimmer | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+      {% set i = states('sensor.og_woh_temp') | float(none) %}{% set s = states('sensor.og_woh_setpoint_abs') | float(none) %}{% set v = states('binary_sensor.og_woh_stellwert_state') %}| Wohnen | {{ i if i is not none else '–' }} | {{ s if s is not none else '–' }} | {% if i is not none and s is not none %}{% set d = (i - s) | round(1) %}{% if d <= -1 %}<font color=red>**{{ d }}**</font>{% else %}{{ d }}{% endif %}{% else %}–{% endif %} | {{ '🔥 offen' if v == 'on' else ('zu' if v == 'off' else v) }} |
+
+      FBH Bad: {{ 'gesperrt (normal)' if is_state('switch.og_bad_sperre_fbh', 'on') else '**freigegeben** seit ' ~ relative_time(states.switch.og_bad_sperre_fbh.last_changed) }}
+  - type: history-graph
+    title: OG Bad – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.og_bad_temp
+      name: IST
+    - entity: sensor.og_bad_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: OG Bad FBH (elektr.) – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.og_bad_fbh_temp
+      name: IST
+    - entity: sensor.og_bad_fbh_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: OG Gast – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.og_gas_temp
+      name: IST
+    - entity: sensor.og_gas_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: OG Küche – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.og_kue_temp
+      name: IST
+    - entity: sensor.og_kue_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: OG Schlafzimmer – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.og_sch_temp
+      name: IST
+    - entity: sensor.og_sch_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: OG Wohnen – IST/SOLL 48 h
+    hours_to_show: 48
+    entities:
+    - entity: sensor.og_woh_temp
+      name: IST
+    - entity: sensor.og_woh_setpoint_abs
+      name: SOLL
+  - type: history-graph
+    title: OG Ventile (Aktor-Rückmeldung) 48 h
+    hours_to_show: 48
+    entities:
+    - entity: binary_sensor.og_bad_stellwert_state
+      name: Bad
+    - entity: binary_sensor.og_bad_fbh_stellwert_state
+      name: Bad FBH (elektr.)
+    - entity: binary_sensor.og_gas_stellwert_state
+      name: Gast
+    - entity: binary_sensor.og_kue_stellwert_state
+      name: Küche
+    - entity: binary_sensor.og_sch_stellwert_state
+      name: Schlafzimmer
+    - entity: binary_sensor.og_woh_stellwert_state
+      name: Wohnen
